@@ -3,6 +3,7 @@
 import threading
 import queue
 import bs4
+import urllib.error
 import make_cookie
 
 
@@ -10,7 +11,7 @@ url_queue = queue.Queue()
 save_queue = queue.Queue()
 cookiejar, opener = make_cookie.make_cookiejar_opener()
 
-out = open("G:/tmp/thread_test_bundle", "a", encoding="utf-8")
+out = open("F:/tmp/thread_test_bundle1", "a", encoding="utf-8")
 
 
 def make_url():
@@ -48,8 +49,8 @@ def make_url():
 def get_item():
     while url_queue.qsize() > 0:
         url = url_queue.get()
-        response = opener.open(url[0])
-        if response:
+        try:
+            response = opener.open(url[0])
             soup = bs4.BeautifulSoup(response, "html5lib")
             a_soup = soup.find_all("a", target="_blank")
             for a in a_soup:
@@ -66,6 +67,9 @@ def get_item():
                 print(str(name) + "\t" + str(bundleid) + "\t" + str(url[1]) + "\n")
                 item = str(name) + "\t" + str(bundleid) + "\t" + str(url[1]) + "\n"
                 save_queue.put(item)
+        except urllib.error.HTTPError as excep:
+            print("When open %s Error %s" % (url, str(excep)))
+
     else:
         print("Get item work done")
 
@@ -73,6 +77,7 @@ def get_item():
 def save_item():
     while save_queue.qsize() > 0 or url_queue.qsize() > 0:
         out.write(save_queue.get())
+        out.flush()
         print("Save is running")
     print("Save work done")
 
@@ -89,6 +94,7 @@ if __name__ == '__main__':
 
     for th in threads:
         if th.is_alive():
+            print("is alive()")
             th.join()
 
     exit()
