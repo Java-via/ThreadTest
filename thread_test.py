@@ -12,15 +12,16 @@ url_queue = queue.Queue()
 save_queue = queue.Queue()
 cookiejar, opener = make_cookie.make_cookiejar_opener()
 
-out = open("F:/tmp/thread_test_bundle1", "a", encoding="utf-8")
+out = open("G:/tmp/thread_test_bundle1", "a", encoding="utf-8")
 
 
 def make_url():
 
-    cookie_string = "PHPSESSID=2mu9pbkmq9j1g4peui4llkbmt1; " \
-                    "Hm_lvt_0bcb16196dddadaf61c121323a9ec0b6=1472576282; " \
-                    "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472576478; " \
-                    "ASOD=OcE75z1Yxw2JaX85y%2BDrcFFn"
+    cookie_string = "Hm_lvt_0bcb16196dddadaf61c121323a9ec0b6=1472529459,1472535842,1472619586; " \
+                    "PHPSESSID=socmakkea0ub0njgt85ud4lqj5; " \
+                    "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472619621; " \
+                    "ASOD=OWlJI2pjDkkOd9z3ERq91d1Y; " \
+                    "USERINFO=SvSk6fx1QXQVV43iTgUFO6TIPphCPYVQOHwCYZ%2Bd04iAGv3i1Oxy4bP%2BIyeNqh5q"
     cookiejar, opener = make_cookie.make_cookiejar_opener()
     cookies_list = make_cookie.make_cookies_string(cookie_string, domain="aso100.com")
     for cookie in cookies_list:
@@ -70,7 +71,7 @@ def get_item():
                 save_queue.put(item)
         except urllib.error.HTTPError as excep:
             print("When open %s Error %s" % (url, str(excep)))
-
+            url_queue.put(url)
     else:
         print("Get item work done")
 
