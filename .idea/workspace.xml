@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2e08b3a4-c5f9-4620-b0d5-3c2b8b85e14a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/db_config.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/get_classify.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config.py" afterPath="$PROJECT_DIR$/config.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/for_aso.py" afterPath="$PROJECT_DIR$/for_aso.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/make_cookie.py" afterPath="$PROJECT_DIR$/make_cookie.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/thread_test.py" afterPath="$PROJECT_DIR$/thread_test.py" />
-    </list>
+    <list default="true" id="2e08b3a4-c5f9-4620-b0d5-3c2b8b85e14a" name="Default" comment="" />
     <ignored path="ThreadTest.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
