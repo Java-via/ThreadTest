@@ -3,6 +3,8 @@
 import http.cookiejar
 import urllib.request
 import time
+import random
+import config
 
 
 def make_cookie(name, value, domain, port=None, path=None, expires=None):
@@ -47,4 +49,16 @@ def make_cookiejar_opener(is_cookie=True, proxies=None):
             opener = urllib.request.build_opener(urllib.request.ProxyHandler(proxies=proxies))
 
     return cookie_jar, opener
+
+
+def make_headers(user_agent, **kwargs):
+    """
+    make a dictionary headers for requesting, user_agent: "pc", "phone", "all" or a ua_string
+    """
+    kwargs["user_agent"] = random.choice(config.CONFIG_USERAGENT_ALL) if user_agent == "all" else (
+        random.choice(config.CONFIG_USERAGENT_PC) if user_agent == "pc" else (
+            random.choice(config.CONFIG_USERAGENT_PHONE) if user_agent == "phone" else user_agent
+        )
+    )
+    return {config.CONFIG_HEADERS_MAP[key]: kwargs[key] for key in kwargs if key in config.CONFIG_HEADERS_MAP}
 

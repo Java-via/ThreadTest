@@ -4,47 +4,52 @@ import threading
 import queue
 import bs4
 import time
+import random
 import urllib.error
 import make_cookie
+import config
 
 
 url_queue = queue.Queue()
 save_queue = queue.Queue()
 cookiejar, opener = make_cookie.make_cookiejar_opener()
 
-out = open("G:/tmp/thread_test_bundle1", "a", encoding="utf-8")
+out = open("G:/tmp/bundle_act", "a", encoding="utf-8")
 
 
 def make_url():
 
     cookie_string = "Hm_lvt_0bcb16196dddadaf61c121323a9ec0b6=1472529459,1472535842,1472619586; " \
                     "PHPSESSID=socmakkea0ub0njgt85ud4lqj5; " \
-                    "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472619621; " \
-                    "ASOD=OWlJI2pjDkkOd9z3ERq91d1Y; " \
+                    "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472619642; " \
                     "USERINFO=SvSk6fx1QXQVV43iTgUFO6TIPphCPYVQOHwCYZ%2Bd04iAGv3i1Oxy4bP%2BIyeNqh5q"
     cookiejar, opener = make_cookie.make_cookiejar_opener()
-    cookies_list = make_cookie.make_cookies_string(cookie_string, domain="aso100.com")
+    cookies_list = make_cookie.make_cookies_string(cookie_string, domain=".aso100.com")
     for cookie in cookies_list:
         cookiejar.set_cookie(cookie)
 
-    for i in range(7001, 7020):
-        title = ""
-        if i == 7010:
-            continue
-        for page in range(1, 8):
-            url = [1, 2]
-            if page == 1:
-                url[0] = "http://aso100.com/rank/index/device/iphone/country/cn/brand/free/genre/" + str(i)
-                response = opener.open(url[0])
-                soup = bs4.BeautifulSoup(response, "html5lib")
-                title = soup.find("div", class_="title").get_text().split(" ")
-                url[1] = title[2][2:-3]
-            else:
-                url[0] = "http://aso100.com/rank/more/device/iphone/country/cn/brand/free/genre/" + str(i) \
-                         + "?page=" + str(page)
-                url[1] = title[2][2:-3]
-            print(str(url))
-            url_queue.put(url)
+    opener.addheaders = make_cookie.make_headers(user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) "
+                                                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                                                            "Chrome/52.0.2743.116 Safari/537.36").items()
+
+    # for i in range(7001, 7020):
+    title = ""
+        # if i == 7010:
+        #     continue
+    for page in range(1, 8):
+        url = [1, 2]
+        if page == 1:
+            url[0] = "http://aso100.com/rank/index/device/iphone/country/cn/brand/free/genre/7001"
+            response = opener.open(url[0])
+            soup = bs4.BeautifulSoup(response, "html5lib")
+            title = soup.find("div", class_="title").get_text().split(" ")
+            url[1] = title[2][2:-3]
+        else:
+            url[0] = "http://aso100.com/rank/more/device/iphone/country/cn/brand/free/genre/7001" \
+                     + "?page=" + str(page)
+            url[1] = title[2][2:-3]
+        print(str(url))
+        url_queue.put(url)
 
 
 def get_item():
@@ -96,7 +101,7 @@ if __name__ == '__main__':
 
     for th in threads:
         if th.is_alive():
-            print("is alive()")
+            print("is alive")
             th.join()
 
     exit()

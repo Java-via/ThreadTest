@@ -6,13 +6,15 @@ import make_cookie
 f = open("G:/tmp/detail_url", "a", encoding="utf-8")
 out = open("G:/tmp/bundle", "a", encoding="utf-8")
 
-cookie_string = "PHPSESSID=btqkg9amjrtoeev8coq0m78396; " \
-                "USERINFO=n6nxTHTY%2BJA39z6CpNB4eKN8f0KsYLjAQTwPe%2BhLHLruEbjaeh4ulhWAS5RysUM%2B; " \
-                "Hm_lvt_0bcb16196dddadaf61c121323a9ec0b6=1472528976; " \
-                "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472534045; " \
-                "ASOD=xyCtGMkg%2BeAQu4jGhbEHbwEv"
+COOKIE_STRING_ASO = "PHPSESSID=btqkg9amjrtoeev8coq0m78396; " \
+                    "USERINFO=n6nxTHTY%2BJA39z6CpNB4eKN8f0KsYLjAQTwPe%2BhLHLruEbjaeh4ulhWAS5RysUM%2B; " \
+                    "Hm_lvt_0bcb16196dddadaf61c121323a9ec0b6=1472528976; " \
+                    "Hm_lpvt_0bcb16196dddadaf61c121323a9ec0b6=1472534045; " \
+                    "ASOD=xyCtGMkg%2BeAQu4jGhbEHbwEv"
+DOMAIN_ASO = "aso100.com"
+
 cookiejar, opener = make_cookie.make_cookiejar_opener()
-cookies_list = make_cookie.make_cookies_string(cookie_string, domain="aso100.com")
+cookies_list = make_cookie.make_cookies_string(COOKIE_STRING_ASO, domain=DOMAIN_ASO)
 for cookie in cookies_list:
     cookiejar.set_cookie(cookie)
 
@@ -60,6 +62,5 @@ for url in url_list:
             bundleid = tr[4].find_all("td")[1].get_text()
             print(str(name) + "\t" + str(bundleid) + "\t" + str(url[1]) + "\n")
             out.write(str(name) + "\t" + str(bundleid) + "\t" + str(url[1]) + "\n")
-
 
 print("save detail_url done")
